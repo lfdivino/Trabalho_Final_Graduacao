@@ -3,18 +3,17 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  var data = {
+    series: [20, 15]
   };
+
+  var sum = function(a, b) { return a + b };
+
+  new Chartist.Pie('.ct-chart', data, {
+    labelInterpolationFnc: function(value) {
+      return Math.round(value / data.series.reduce(sum) * 100) + '%';
+    }
+  });
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
